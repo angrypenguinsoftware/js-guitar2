@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/guitar.png">
+    <link rel="stylesheet" href="./styles.css">
+    <title>JS-guitar</title>
+</head>
+<body>
+
+    <div class="settings">
+        <label for="instrument-selector">Selected instrument:</label>
+        <select name="instrument-selector" id="instrument-selector"></select>
+    
+        <div class="accidental-selector">
+            <input type="radio" class="acc-select" id="flats" name="accidentals" value="flats" checked>
+            <label for="flats">♭</label>
+            <input type="radio" class="acc-select" id="sharps" name="accidentals" value="sharps">
+            <label for="sharps">♯</label>
+        </div>
+        <label for="number-of-frets">Number Of Frets: </label>
+        <input type="number" id="number-of-frets" min="5" max="30" value="22">
+
+        <label for="show-all-notes">Show All Notes: </label>
+        <input type="checkbox" id="show-all-notes">
+
+        <label for="show-multiple-notes">Show Multiple Notes: </label>
+        <input type="checkbox" id="show-multiple-notes">
+
+        <label for="select-individual-notes">Select Individual Notes: </label>
+        <input type="checkbox" id="select-individual-notes" value="checked">
+
+        <button type="button" id="clear-button">Clear </button>
+    </div>
+    <div class="fretboard">
+        <!--Everything happens here-->
+    </div>
+    <div class="fretNumbers"></div>
+
+    <div class="note-name-section"></div>
+
+    <div class="theory">
+        <label for="key-selector">Select Key: </label>
+        <select name="key-selector" id="key-selector"></select>
+
+        <label for="scale-selector">Selected Scale: </label>
+        <select name="scale-selector" id="scale-selector"></select>
+
+        <button type="button" id="clear-button-theory">Clear </button>
+    </div>
+    <script src="./app.js"></script>
+</body>
+</html>
