@@ -25,7 +25,7 @@ body{
 }
 
 /* changed display to block from flex as flex would not allow multiple lines */
-.settings, .theory {
+.settings, .theory  {
     display: flex;
     color: #fff;
     padding: 20px;
@@ -43,6 +43,15 @@ body{
     width: 70px;
     text-align: center;
 }
+
+#get-chord {
+    margin-left: 20px;
+    height: 25px;
+    width: 100px;
+    text-align: center;
+
+}
+
 
 /* to enable the arrow buttons on the NumberOfFrets control in Chrome  */
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button{
@@ -162,6 +171,19 @@ label{
 .note-name-section span:hover{
     color: #00baba;
 }
+
+
+#show-all-notes, 
+#show-multiple-notes, 
+#select-individual-notes {
+    margin-left: 50px;
+}
+
+.show-chords {
+    color: #eee;
+    padding-left: 100px;
+}
+
 
 /* .theory {
     display: flex;

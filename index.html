@@ -15,23 +15,23 @@
         <select name="instrument-selector" id="instrument-selector"></select>
     
         <div class="accidental-selector">
-            <input type="radio" class="acc-select" id="flats" name="accidentals" value="flats" checked>
-            <label for="flats">♭</label>
-            <input type="radio" class="acc-select" id="sharps" name="accidentals" value="sharps">
+            <input type="radio" class="acc-select" id="sharps" name="accidentals" value="sharps" checked>
             <label for="sharps">♯</label>
+            <input type="radio" class="acc-select" id="flats" name="accidentals" value="flats">
+            <label for="flats">♭</label>
         </div>
         <label for="number-of-frets">Number Of Frets: </label>
-        <input type="number" id="number-of-frets" min="5" max="30" value="22">
+        <input type="number" id="number-of-frets" min="5" max="30" value="24">
 
-        <label for="show-all-notes">Show All Notes: </label>
         <input type="checkbox" id="show-all-notes">
+        <label for="show-all-notes">Show All Notes </label> 
 
-        <label for="show-multiple-notes">Show Multiple Notes: </label>
         <input type="checkbox" id="show-multiple-notes">
+        <label for="show-multiple-notes">Show Multiple Notes</label>
 
-        <label for="select-individual-notes">Select Individual Notes: </label>
-        <input type="checkbox" id="select-individual-notes" value="checked">
-
+        <input type="checkbox" id="select-individual-notes">
+        <label for="select-individual-notes">Select Individual Notes </label>
+        
         <button type="button" id="clear-button">Clear </button>
     </div>
     <div class="fretboard">
@@ -49,7 +49,13 @@
         <select name="scale-selector" id="scale-selector"></select>
 
         <button type="button" id="clear-button-theory">Clear </button>
+
+        <div class="identifyChord">
+            <button type="button" id="get-chord">Get Chord</button>
+        </div>
     </div>
+    <div class="show-chords"></div>
+
     <script src="./app.js"></script>
 </body>
 </html>
