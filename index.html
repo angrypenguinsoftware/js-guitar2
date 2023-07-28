@@ -6,55 +6,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/images/guitar.png">
     <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <title>JS-guitar</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-    <div class="settings">
-        <label for="instrument-selector">Selected instrument:</label>
-        <select name="instrument-selector" id="instrument-selector"></select>
-    
-        <div class="accidental-selector">
-            <input type="radio" class="acc-select" id="sharps" name="accidentals" value="sharps" checked>
-            <label for="sharps">♯</label>
-            <input type="radio" class="acc-select" id="flats" name="accidentals" value="flats">
-            <label for="flats">♭</label>
-        </div>
-        <label for="number-of-frets">Number Of Frets: </label>
-        <input type="number" id="number-of-frets" min="5" max="30" value="24">
-
-        <input type="checkbox" id="show-all-notes">
-        <label for="show-all-notes">Show All Notes </label> 
-
-        <input type="checkbox" id="show-multiple-notes">
-        <label for="show-multiple-notes">Show Multiple Notes</label>
-
-        <input type="checkbox" id="select-individual-notes">
-        <label for="select-individual-notes">Select Individual Notes </label>
+    <div class='wrapper'>
+        <div class="settings">
+            <label for="instrument-selector">Selected instrument:</label>
+            <select name="instrument-selector" class="btn btn-dropdown btn-outline-primary dropdown-toggle" id="instrument-selector"></select>
         
-        <button type="button" id="clear-button">Clear </button>
-    </div>
-    <div class="fretboard">
-        <!--Everything happens here-->
-    </div>
-    <div class="fretNumbers"></div>
+            <div class="accidental-selector">
+                <input type="radio" class="acc-select" id="sharps" name="accidentals" value="sharps" checked>
+                <label for="sharps">♯</label>
+                <input type="radio" class="acc-select" id="flats" name="accidentals" value="flats">
+                <label for="flats">♭</label>
+            </div>
+            <label for="number-of-frets">Number Of Frets: </label>
+            <input type="number" class="btn btn-outline-primary dropdown-toggle" id="number-of-frets" min="5" max="30" value="24">
 
-    <div class="note-name-section"></div>
+            <input type="checkbox" class="btn-checkbox btn-primary" id="select-individual-notes">
+            <label for="select-individual-notes">Select Individual Notes </label>
 
-    <div class="theory">
-        <label for="key-selector">Select Key: </label>
-        <select name="key-selector" id="key-selector"></select>
+            <input type="checkbox" class="btn-checkbox btn-primary" id="show-all-notes">
+            <label for="show-all-notes">Show All Notes </label> 
 
-        <label for="scale-selector">Selected Scale: </label>
-        <select name="scale-selector" id="scale-selector"></select>
-
-        <button type="button" id="clear-button-theory">Clear </button>
-
-        <div class="identifyChord">
-            <button type="button" id="get-chord">Get Chord</button>
+            <input type="checkbox" class="btn-checkbox btn-primary" id="show-multiple-notes">
+            <label for="show-multiple-notes">Show Multiple Notes</label>
+            
+            <button type="button" class='btn btn-outline-primary' id="clear-button">Clear </button>
         </div>
+        <div class="fretboard">
+            <!--Everything happens here-->
+        </div>
+        <div class="fretNumbers"></div>
+
+        <div class="note-name-section"></div>
+
+        <div class="theory">
+            <label for="key-selector">Select Key: </label>
+            <select name="key-selector" class="btn  btn-outline-primary dropdown-toggle" id="key-selector"></select>
+
+            <label for="scale-selector">Selected Scale: </label>
+            <select name="scale-selector" class="btn btn-dropdown btn-outline-primary dropdown-toggle" id="scale-selector"></select>
+
+            <button type="button" class='btn btn-outline-primary' id="clear-button-theory">Clear </button>
+
+            <div class="identifyChord">
+                <button type="button" class='btn btn-outline-primary' id="get-chord">Get Chord</button>
+            </div>
+        </div>
+        <div class="show-chords"></div>
     </div>
-    <div class="show-chords"></div>
 
     <script src="./app.js"></script>
 </body>

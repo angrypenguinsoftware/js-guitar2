@@ -10,7 +10,6 @@ const showAllNotesSelector = document.querySelector('#show-all-notes');
 const showMultipleNotesSelector = document.querySelector('#show-multiple-notes');
 const showIndividualSelectedNotes = document.querySelector('#select-individual-notes');
 const clearButton = document.querySelector('#clear-button');
-//const fretNumbersSection = document.querySelector('.fretNumbers');
 const noteNameSection = document.querySelector('.note-name-section');
 const scaleSelector = document.querySelector('#scale-selector');
 const keySelector = document.querySelector('#key-selector');
@@ -21,33 +20,25 @@ const showChords = document.querySelector('.show-chords');
 const singleFretMarkPositions = [3, 5, 7, 9, 15, 17, 19, 21];
 const doubleFretMarkPositions = [12, 24];
 
-// const notesFlat = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
-// const notesSharp = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-
 const notesFlat = ["A", "Bb", "B", "C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab"];
 const notesSharp = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 
 // Other instruments tunings object
-// const instrumentTuningPresets = {
-//     'Guitar': [4, 11, 7, 2, 9, 4],
-//     'Guitar 1 Step Down': [3, 10, 6, 1, 8, 3],
-//     'Guitar Drop D': [4, 11, 7, 2, 9, 2],
-//     'Bass (4 Strings)': [7, 2, 9, 4], 
-//     'Bass (5 Strings)': [7, 2, 9, 4, 11], 
-//     'Ukulele': [9, 4, 0, 7],
-//     'Open C': [4, 0, 7, 0, 7, 0],
-//     'Open D': [2, 9, 6, 2, 9, 2],
-//     'Modal D': [2, 9, 7, 2, 7, 2],
-//     'Open D Minor': [2, 7, 5, 2, 7, 2],
-//     'Open G': [2, 11, 7, 2, 7, 2],
-//     'Modal G': [2, 0, 7, 2, 7, 2],
-//     'Open G Minor': [2, 10, 7, 2, 7, 2],
-//     'Open A': [4, 9, 4, 1, 9, 4]
-// };
-
 const instrumentTuningPresets = {
     'Guitar': [7, 2, 10, 5, 0, 7],
-    'Bass (4 Strings)': [10, 5, 0, 7]
+    'Guitar 1 Step Down': [6, 1, 9, 4, 11, 6],
+    'Guitar Drop D': [7, 2, 10, 5, 12, 5],
+    'Bass (4 Strings)': [10, 5, 0, 7],  
+    'Bass (5 Strings)': [10, 5, 12, 7, 2], 
+    'Ukulele': [12, 7, 3, 10],
+    'Open C': [7, 3, 10, 3, 10, 3],
+    'Open D': [5, 12, 9, 5, 12, 5],
+    'Modal D': [5, 12, 10, 5, 10, 5],
+    'Open D Minor': [5, 10, 8, 5, 10, 5],
+    'Open G': [5, 2, 10, 5, 10, 5],
+    'Modal G': [5, 3, 10, 5, 10, 5],
+    'Open G Minor': [5, 1, 10, 5, 10, 5],
+    'Open A': [7, 12, 7, 4, 12, 7]
 };
 
 // List of scales
@@ -67,10 +58,8 @@ const scaleFormulas = {
     'Harmonic Minor': [0, 2, 3, 5, 7, 8, 11]  
 };
 
-// const notesFlat = ["A", "Bb", "B", "C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab"];
-// const notesSharp = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
-
 // This is confusing but the root note starts on 0 not 1...
+// so 1-3-5 is actually 0-4-7 
 const chordFormulas = {
     'Major': [0, 4, 7],
     'Minor': [0, 3, 7],
@@ -97,7 +86,8 @@ const chordFormulas = {
     'Minor 11th': [0, 2, 3, 6, 7, 10],
     '7th #11th': [0, 2, 4, 6, 7, 10],
     '13th': [0, 2, 4, 5, 7, 8, 10],
-    'Minor 13th': [0, 2, 3, 5, 7, 8, 10]
+    'Minor 13th': [0, 2, 3, 5, 7, 8, 10],
+    'Power Chord': [0, 7]
 }
 
 // use let as these settings will change
@@ -124,7 +114,6 @@ const app = {
     init(){
         this.setupFretboard();
         this.setupinstrumentSelector();
-        // this.setupFretNumbersSection();
         this.setupNoteNameSection();
         this.setupKeySelector();
         this.setupScaleSelector();
@@ -223,15 +212,6 @@ const app = {
         }
     },
 
-    // setupFretNumbersSection(){
-    //     fretNumbersSection.innerHtml = ''; 
-    //     let fretNumbers = singleFretMarkPositions;
-    //     fretNumbers.forEach((fretNumber) => {
-    //         let fretNumberElement = tools.createElement('span', fretNumber);
-    //         fretNumbersSection.appendChild(fretNumberElement);
-    //     });
-    // },
-
     setupNoteNameSection(){
         noteNameSection.innerHTML = '';
         let noteNames;
@@ -288,7 +268,6 @@ const app = {
             each.remove();
         })
     }
-
 }
 
 const handlers = {
@@ -319,9 +298,6 @@ const handlers = {
     },
 
     showClickedNoteDot(event){
-
-        console.log(event.target);
-
         // Persists the notes
         if (showIndividualNotes) {
             if (!chordNotes.includes(event.target.dataset.note)) {
@@ -335,34 +311,14 @@ const handlers = {
                     event.target.style.setProperty('--noteDotOpacity', 1);
                     // event.target.style.setProperty('--noteBackground', 'red');
                 }
+
+                if (showAllNotes) {
+                    event.target.style.setProperty('--noteBackground', 'red');
+                }
             }
         } else {
             return;
         }    
-        
-        // if (event.target.style.getPropertyValue('--noteDotOpacity') == 0 || event.target.style.getPropertyValue('--noteDotOpacity') == null) {
-        //     console.log('yes');
-        //     if (showAllNotes || showIndividualNotes){
-        //         return;
-        //     }
-        //     if (event.target.classList.contains('note-fret')){
-        //         if (showMultipleNotes){
-        //             app.toggleMultipleNotes(event.target.dataset.note, 1);
-        //         } else {
-        //             event.target.style.setProperty('--noteDotOpacity', 1);
-        //         }
-        //     }
-        // } else {
-        //     console.log('no');
-        //     if (showAllNotes || showIndividualNotes){
-        //         return;
-        //     }
-        //     if (showMultipleNotes){
-        //         app.toggleMultipleNotes(event.target.dataset.note, 0);
-        //     } else {
-        //         event.target.style.setProperty('--noteDotOpacity', 0);
-        //     }   
-        // }
     },
 
     setSelectedInstrument(event){
@@ -433,18 +389,17 @@ const handlers = {
     },
 
     identifyChord(event){
-        // let newNotes = [chordNotes.sort()];
         let arr = [];
         let temp;
         let offset;
         let rootNote;
         let chordsToShow = [];
 
+        // Clear the list of chords
+        app.clearChordList();
+
         // Will manipulate chordNotes so use local array instead
         let localChordNotes = [] = chordNotes;
-
-        // console.log(chordNotes);
-        // const notesSharp = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 
         for (let w = 0; w < chordNotes.length; w++) {
             // Cycle through chordNotes changing the starting not of localChordNotes each time... 
@@ -452,7 +407,6 @@ const handlers = {
             for (let i = 0; i < localChordNotes.length; i++) {
                 rootNote = localChordNotes[0];
                 if (typeof localChordNotes[i] != 'undefined') {
-                    // console.log("local " + chordNotes[i]);
                     if (accidentals === 'flats'){
                         // Flats
                         temp = notesFlat.indexOf(localChordNotes[i]);
@@ -471,34 +425,23 @@ const handlers = {
                         temp = temp + 12;
                     }
 
-                    // let objChordNote = {
-                    //     'chordNoteName': chordNotes[i],
-                    //     'chordNoteValue': temp,
-                    //     'chordTone': temp - offset
-                    // }
-                    // arr.push(objChordNote);
-
                     arr.push(temp - offset);
                 }
             }
+            // FYI array.sort() in javascript sucks! it sorts numbers alphabetically
+            // Use the below code to sort numbers correctly
             let bob = arr.sort((a, b) => a - b).toString();
-            // let bob = arr.toString();
-            // console.log("this is bob - " + bob);
             arr = [];
 
             for (chord in chordFormulas){
-                // console.log(chordFormulas[chord].toString());
                 if (bob == chordFormulas[chord].toString()) {
                     if (typeof rootNote != 'undefined') {
-                        // console.log(rootNote + " " + chord + " " + chordFormulas[chord].toString());
-                        chordsToShow.push(rootNote + " " + chord + "  - " + localChordNotes);
+                        chordsToShow.push(rootNote + " " + chord + " - " + localChordNotes);
                     }
                 }
             }
 
-            // console.log(localChordNotes);
             let blah = localChordNotes.shift();
-            // console.log("BLAH - " + localChordNotes);
             localChordNotes.push(blah);    
         }
 
@@ -511,7 +454,6 @@ const handlers = {
             let item = tools.createElement('li', 'No Identifiable Chords to Show');
             showChords.appendChild(item);
         }
-
     },
 
     // ---- Event Listeners Start Here ----
@@ -532,7 +474,6 @@ const handlers = {
         keySelector.addEventListener('click', (event) => {
             app.setupFretboard();
             selectedKey = event.target.value;
-            // console.log(selectedKey);
         });
 
         scaleSelector.addEventListener('click', (event) => {
@@ -563,16 +504,6 @@ const handlers = {
   
             for( let j = 0; j < notes.length; j++){
                 if (index2.includes(j)){
-                    
-
-                    // if (selectedKey === notes[j]) {
-                    //     //root.style.setProperty('--noteBackground', 'black');
-                    //     noteFret.setAttribute('note-color', 'black');
-                    // } else {
-                    //      //root.style.setProperty('--noteBackground', 'teal');
-                    //      noteFret.setAttribute('note-color', 'teal');
-                    //  }
-
                     app.toggleMultipleNotes(notes[j], 1);
                 }
             } 
