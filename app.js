@@ -59,36 +59,66 @@ const scaleFormulas = {
 };
 
 // This is confusing but the root note starts on 0 not 1...
-// so 1-3-5 is actually 0-4-7 
+// so 1-3-5 is actually 0-4-7 and so on... See below for key
+
+// Notes	A	A#	B	C	C#	D	D#	E	F	F#	G	G#	A	A#	B	C	C#	D	D#	E	F	F#
+// Music	1	b2	2	b3	3	4	b5	5	b6	6	b7	7	8	b9	9	b10	10	11	b12	12	b13	13
+// For App	0	1	2	3	4	5	6	7	8	9	10	11	12	13	14	15	16	17	18	19	20	21
+
 const chordFormulas = {
-    'Major': [0, 4, 7],
-    'Minor': [0, 3, 7],
-    '7th Dominant': [0, 4, 7, 10],
-    'Minor 7th': [0, 3, 7, 10],
-    'Major 7th': [0, 4, 7, 11],
-    'Augmented': [0, 4, 8],
-    'Diminished': [0, 3, 6],
-    'Diminished 7th': [0, 3, 6, 9],
-    'Half Diminished 7th': [0, 3, 6, 10],
-    'Sus4': [0, 5, 7],
-    'Sus2': [0, 2, 7],
-    '6th': [0, 4, 7, 9],
-    'Minor 6th': [0, 3, 7, 9],
-    '9th': [0, 2, 4, 7, 10],
-    'Minor 9th': [0, 2, 3, 7, 10],
-    'Major 9th' : [0, 2, 4, 7, 11],
-    'Added 9th': [0, 2, 4, 7],
-    '6th Add 9': [0, 2, 4, 7, 9],
-    '7th #5': [0, 4, 8, 10],
-    '7th b5': [0, 4, 6, 10],
-    '7th #9': [0, 3, 4, 7, 10],
-    '11th': [0, 4, 5, 7, 10],
-    'Minor 11th': [0, 2, 3, 6, 7, 10],
-    '7th #11th': [0, 2, 4, 6, 7, 10],
-    '13th': [0, 2, 4, 5, 7, 8, 10],
-    'Minor 13th': [0, 2, 3, 5, 7, 8, 10],
-    'Power Chord': [0, 7]
+    'Major (maj) ': [0, 4, 7],
+    'Minor (m or min) ': [0, 3, 7],
+    'Dominant 7th (7 or dom7) ': [0, 4, 7, 10],
+    'Minor 7th (m7 or min7) ': [0, 3, 7, 10],
+    'Major 7th (M7 or maj7) ': [0, 4, 7, 11],
+    'Minor Major 7th (mM7 or minMaj7) ': [0, 3, 7, 11],
+    'Augmented (+ or aug) ': [0, 4, 8],
+    'Diminished (dim or m(b5)) ': [0, 3, 6],
+    'Diminished 5th (-5) ': [0, 4, 6],
+    'Diminished 7th (dim7) ': [0, 3, 6, 9],
+    'Half Diminished 7th (m7b5 or -7(b5)) ': [0, 3, 6, 10],
+    'Suspended 4th (sus or sus4) ': [0, 5, 7],
+    'Suspended 2nd (sus2) ': [0, 2, 7],
+    'Sixth (6) ': [0, 4, 7, 9],
+    'Minor 6 (m6) ': [0, 3, 7, 9],
+    'Suspended 7th (7sus4) ': [0, 5, 7, 10],
+    'Augmented 7th (+7 or aug7 or 7+5 or 7#5) ': [0, 4, 8, 10],
+    'Augmented Major 7th (+(M7) or M7+5 or M7#5) ': [0, 4, 8, 11],
+    '9th (9) ': [0, 2, 4, 7, 10],
+    'Minor 9th (m9) ': [0, 2, 3, 7, 10],
+    'Major 9th (maj9 or M9) ' : [0, 2, 4, 7, 11],
+    'Added 9th (add9) ': [0, 2, 4, 7],
+    '6th Add 9 (6/9) ': [0, 2, 4, 7, 9],
+    '7th Sharp 5 (7#5) ': [0, 4, 8, 10],
+    '7th Flat 5 (7b5) ': [0, 4, 6, 10],
+    '7th Sharp 9 (7#9) ': [0, 3, 4, 7, 10],
+    '7th Flat 9 (7b9) ': [0, 1, 4, 7, 10],
+    '11th (11) ': [0, 4, 5, 7, 10],
+    'Minor 11th (m11 or min11) ': [0, 2, 3, 6, 7, 10],
+    'Major 11th (M11 or maj11) ': [0, 2, 4, 7, 9, 11],
+    '7th Sharp 11th (7#11)': [0, 2, 4, 6, 7, 10],
+    'Major 7 Sharp 11th (maj7#11) ': [0, 4, 6, 7, 11],
+    '13th (13) ': [0, 2, 4, 5, 7, 9, 10],
+    '13th (13)(11th omitted)': [0, 2, 4, 7, 9, 10],
+    'Minor 13th (m13 or min13)': [0, 2, 3, 5, 7, 8, 10],
+    'Power Chord (5)': [0, 7],
+    'Added 4th (add4) ': [0, 4, 5, 7],
+    'Minor Second Interval': [0, 1],
+    'Major Second Interval': [0, 2],
+    'Minor Third Interval': [0, 3],
+    'Major Third Interval': [0, 4],
+    'Perfect Fourth Interval': [0, 5],
+    'Perfect Fifth Interval': [0, 6],
+    'Diminished Fifth Interval': [0, 7],
+    'Minor Sixth  Interval': [0, 8],
+    'Major Sixth Interval': [0, 9],
+    'Minor Seventh Interval': [0, 10],
+    'Major Seventh Interval': [0, 11],
+    'Octave Interval': [0]
 }
+
+
+// const notesSharp = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 
 // use let as these settings will change
 let allNotes;
