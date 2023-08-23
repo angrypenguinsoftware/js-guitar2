@@ -49,11 +49,12 @@ body{
     padding-left: 10px;
     padding-top: 5px;
     margin-top: -5px;
-    height: 35px;
+    height: 37px;
 }
 
 .accidental-selector:hover {
     background-color: #007bff;
+    cursor: pointer;
 }
 
 
@@ -61,6 +62,10 @@ body{
     margin-left: 20px;
     width: 70px;
     text-align: center;
+}
+
+#print-button{
+    margin-left: 20px;
 }
 
 #get-chord {
@@ -85,6 +90,10 @@ body{
     width: 20px;
     height: 20px;
     margin-top: 3px;
+}
+
+.btn-checkbox:hover {
+    cursor: pointer;
 }
 
 
@@ -211,19 +220,41 @@ label{
 #show-all-notes, 
 #show-multiple-notes, 
 #select-individual-notes {
-    margin-left: 50px;
+    margin-left: 20px;
 }
+
+.acknowledge {
+    color: white;
+    /* height: 20px; */
+    padding-left: 30px;
+}
+
 
 .show-chords {
     color: #eee;
     background-color: #00baba;
-    padding-left: 100px;
+    padding-left: 30px;
 }
 
-/* .theory {
-    display: flex;
-    color: #fff;
-    padding: 20px;
-    border-bottom: 1px solid #444;
-    background: #282828; 
-} */
+/* style sheet for "A4" printing */
+@media print {
+    @page {
+        margin: 1cm;
+    }
+    .settings {
+        display: none;
+    }
+    .theory {
+        display: none;
+    }
+    .show-chords {
+        font-size: xx-large;
+    }
+    .fretboard {
+        font-size: xx-large;
+        color: #161717;
+    }
+    .string {
+        background: black;
+    }
+}

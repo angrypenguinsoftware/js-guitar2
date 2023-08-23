@@ -9,6 +9,7 @@ const numberOfFretsSelector = document.querySelector('#number-of-frets');
 const showAllNotesSelector = document.querySelector('#show-all-notes');
 const showMultipleNotesSelector = document.querySelector('#show-multiple-notes');
 const showIndividualSelectedNotes = document.querySelector('#select-individual-notes');
+const reverseStrings = document.querySelector('#reverse-strings');
 const clearButton = document.querySelector('#clear-button');
 const noteNameSection = document.querySelector('.note-name-section');
 const scaleSelector = document.querySelector('#scale-selector');
@@ -16,6 +17,7 @@ const keySelector = document.querySelector('#key-selector');
 const clearButtonTheory = document.querySelector('#clear-button-theory');
 const getChord = document.querySelector('#get-chord');
 const showChords = document.querySelector('.show-chords');
+// const printButton = document.querySelector('#print-button');
 
 const singleFretMarkPositions = [3, 5, 7, 9, 15, 17, 19, 21];
 const doubleFretMarkPositions = [12, 24];
@@ -31,14 +33,14 @@ const instrumentTuningPresets = {
     'Bass (4 Strings)': [10, 5, 0, 7],  
     'Bass (5 Strings)': [10, 5, 12, 7, 2], 
     'Ukulele': [12, 7, 3, 10],
-    'Open C': [7, 3, 10, 3, 10, 3],
-    'Open D': [5, 12, 9, 5, 12, 5],
-    'Modal D': [5, 12, 10, 5, 10, 5],
-    'Open D Minor': [5, 10, 8, 5, 10, 5],
-    'Open G': [5, 2, 10, 5, 10, 5],
-    'Modal G': [5, 3, 10, 5, 10, 5],
-    'Open G Minor': [5, 1, 10, 5, 10, 5],
-    'Open A': [7, 12, 7, 4, 12, 7]
+    'Guitar Open C': [7, 3, 10, 3, 10, 3],
+    'Guitar Open D': [5, 12, 9, 5, 12, 5],
+    'Guitar Modal D': [5, 12, 10, 5, 10, 5],
+    'Guitr Open D Minor': [5, 10, 8, 5, 10, 5],
+    'Guitar Open G': [5, 2, 10, 5, 10, 5],
+    'Guitar Modal G': [5, 3, 10, 5, 10, 5],
+    'Guitar Open G Minor': [5, 1, 10, 5, 10, 5],
+    'Guitar Open A': [7, 12, 7, 4, 12, 7]
 };
 
 // List of scales
@@ -134,10 +136,12 @@ let accidentals = 'sharps'; // defalut sharps
 let selectedInstrument = 'Guitar';
 let numberOfStrings = instrumentTuningPresets[selectedInstrument].length;
 
-let selectedKey ='C';
+let selectedKey ='A';
 let selectedScale;
 
 let chordNotes = [];
+
+let stringOrder = 'down';
 
 const app = {
     // initialize app
@@ -160,34 +164,62 @@ const app = {
             let string = tools.createElement('div');
             string.classList.add('string');
 
-            // Set the individual string heights - larger on the bottom
-            switch(i){
-                case 0:
-                    stringWidth = 4;
-                    break;
-                case 1:
-                    stringWidth = 5;
-                    break;
-                case 2:
-                    stringWidth = 6;
-                    break;
-                case 3:
-                    stringWidth = 8;
-                    break;
-                case 4:
-                    stringWidth = 10;
-                    break;
-                case 5:
-                    stringWidth = 12;
-                    break;
-                default:    // defaulted here and in the CSS to 10
-                    stringWidth = 10;
-                    break;
+            // Set the individual string heights - larger on the bottom is default
+            if (stringOrder == 'down') {
+                switch(i){
+                    case 0:
+                        stringWidth = 4;
+                        break;
+                    case 1:
+                        stringWidth = 5;
+                        break;
+                    case 2:
+                        stringWidth = 6;
+                        break;
+                    case 3:
+                        stringWidth = 8;
+                        break;
+                    case 4:
+                        stringWidth = 10;
+                        break;
+                    case 5:
+                        stringWidth = 12;
+                        break;
+                    default:    // defaulted here and in the CSS to 10
+                        stringWidth = 10;
+                        break;
+                }
+            } else {
+                switch(i){
+                    case 0:
+                        stringWidth = 12;
+                        break;
+                    case 1:
+                        stringWidth = 10;
+                        break;
+                    case 2:
+                        stringWidth = 8;
+                        break;
+                    case 3:
+                        stringWidth = 6;
+                        break;
+                    case 4:
+                        stringWidth = 5;
+                        break;
+                    case 5:
+                        stringWidth = 4;
+                        break;
+                    default:    // defaulted here and in the CSS to 10
+                        stringWidth = 10;
+                        break;
+                }
             }
             string.style.setProperty('--string-height', stringWidth);
 
             fretboard.appendChild(string);
 
+
+            // let reverseArray = instrumentTuningPresets[selectedInstrument].reverse();
             // Create Frets
             for(let fret = 0; fret <= numberOfFrets; fret++){
                 let noteFret = tools.createElement('div');
@@ -195,7 +227,15 @@ const app = {
                 string.appendChild(noteFret);
 
                 // Use the guitarTuning array to allow different string tunings
-                let noteName = this.generateNoteNames((fret + instrumentTuningPresets[selectedInstrument][i]), accidentals);
+                let noteName;
+                if (stringOrder == 'down') {
+                    noteName = this.generateNoteNames((fret + instrumentTuningPresets[selectedInstrument][i]), accidentals); 
+                } else {
+                    // Use numberOfStrings to reverse the array index count... needs to have -1 for somereason
+                    noteName = this.generateNoteNames((fret + instrumentTuningPresets[selectedInstrument][(numberOfStrings - 1) - i]), accidentals);
+                }
+
+                // let noteName = this.generateNoteNames((fret + instrumentTuningPresets[selectedInstrument][i]), accidentals);
                 noteFret.setAttribute('data-note', noteName);
 
                 // Add single fret marks
@@ -353,7 +393,6 @@ const handlers = {
 
     setSelectedInstrument(event){
         selectedInstrument = event.target.value;
-        //console.log(selectedInstrument);
         numberOfStrings = instrumentTuningPresets[selectedInstrument].length;
         app.setupFretboard();
     },
@@ -486,6 +525,19 @@ const handlers = {
         }
     },
 
+    reverseStringOrder(event){
+        if (stringOrder == 'down') {
+            stringOrder = 'up';
+        } else {
+            stringOrder = 'down';
+        }
+        app.setupFretboard();
+    },
+
+    // printScreen(event){
+    //     window.print();
+    // },
+
     // ---- Event Listeners Start Here ----
     setupEventListeners(){
         fretboard.addEventListener('mouseover', this.showNoteDot);
@@ -500,6 +552,8 @@ const handlers = {
         noteNameSection.addEventListener('mouseover', this.setNotesToShow);
         noteNameSection.addEventListener('mouseout', this.setNotesToHide);  
         getChord.addEventListener('click', this.identifyChord);
+        reverseStrings.addEventListener('change', this.reverseStringOrder);
+        // printButton.addEventListener('click', this.printScreen);
 
         keySelector.addEventListener('click', (event) => {
             app.setupFretboard();
@@ -510,8 +564,6 @@ const handlers = {
             app.setupFretboard();
 
             showAllNotes = true;
-
-            // console.log("here");
 
             let keys;
             if (accidentals === 'flats'){
@@ -535,6 +587,10 @@ const handlers = {
             for( let j = 0; j < notes.length; j++){
                 if (index2.includes(j)){
                     app.toggleMultipleNotes(notes[j], 1);
+                    if (notes[j] == selectedKey) {
+                        console.log(notes[j]);
+                        // event.target.style.setProperty('--noteBackground', 'red');
+                    }
                 }
             } 
         });

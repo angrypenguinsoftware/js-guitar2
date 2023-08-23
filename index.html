@@ -34,6 +34,9 @@
 
             <input type="checkbox" class="btn-checkbox btn-primary" id="show-multiple-notes">
             <label for="show-multiple-notes">Show Multiple Notes</label>
+
+            <input type="checkbox" class="btn-checkbox btn-primary" id="reverse-strings">
+            <label for="reverse-strings">Reverse Strings</label>
             
             <button type="button" class='btn btn-outline-primary' id="clear-button">Clear </button>
         </div>
@@ -48,16 +51,17 @@
             <label for="key-selector">Select Key: </label>
             <select name="key-selector" class="btn  btn-outline-primary dropdown-toggle" id="key-selector"></select>
 
-            <label for="scale-selector">Selected Scale: </label>
+            <label for="scale-selector">Select Scale: </label>
             <select name="scale-selector" class="btn btn-dropdown btn-outline-primary dropdown-toggle" id="scale-selector"></select>
-
-            <button type="button" class='btn btn-outline-primary' id="clear-button-theory">Clear </button>
 
             <div class="identifyChord">
                 <button type="button" class='btn btn-outline-primary' id="get-chord">Get Chord</button>
             </div>
+            <button type="button" class='btn btn-outline-primary' id="clear-button-theory">Clear </button>
+            <!-- <button type="button" class='btn btn-outline-primary' id="print-button">Print </button> -->
         </div>
         <div class="show-chords"></div>
+        <div><p class="acknowledge">&copy 2023 AngryPenguinSolutions.com All Rights Reserved <i class="fa fa-linux" style="font-size: 24px"></i></p></div>
     </div>
 
     <script src="./app.js"></script>
